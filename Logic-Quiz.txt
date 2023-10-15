@@ -1,0 +1,67 @@
+class Quiz {
+  constructor(questions, category) {
+    this.questions = questions;
+    this.category = category;
+    this.score = 0;
+  }
+
+
+  getRandomQuestion() {
+    const randomIndex = Math.floor(Math.random() * this.questions.length);
+    return this.questions[randomIndex];
+  }
+
+
+  askQuestion() {
+    const question = this.getRandomQuestion();
+    const userAnswer = readLine(`Question: ${question} Please enter the letter of your answer: `);
+
+    if (userAnswer.toLowerCase() === 'a') {
+      println("Correct!");
+      this.score++;
+    } else {
+      println(`Wrong! The correct answer is ${question.indexOf('c') !== -1 ? 'c' : 'a'}.`);
+    }
+  }
+
+
+
+  runQuiz() {
+    for (let i = 0; i < this.questions.length; i++) {
+      this.askQuestion();
+    }
+
+    readLine(`You scored ${this.score * 100 / this.questions.length}%. Press 'ok' to end quiz`);
+  }
+}
+
+
+//////////////////////////
+
+
+// Define question banks
+const historyQuestions = [" a) 1821 ", " b) 1798 ", " c) 1867 ", " d) 1887 "];
+const scienceQuestions = [" a) oxygen", " b) nitrogen ", " c) hydrogen ", " d) helium "];
+const randomQuestions = [" a) seige", " b) rafter ", " c) bloat ", " d) flight "];
+
+// Create quiz objects
+const historyQuiz = new Quiz(historyQuestions, "History");
+const scienceQuiz = new Quiz(scienceQuestions, "Science");
+const randomQuiz = new Quiz(randomQuestions, "Random");
+
+function start() {
+  println("Welcome to my logic quiz!");
+  const type = readLine("Please select a category (H)istory, (S)cience, or (R)andom: ");
+
+  if (type.toLowerCase() === 'h') {
+    historyQuiz.runQuiz();
+  } else if (type.toLowerCase() === 's') {
+    scienceQuiz.runQuiz();
+  } else if (type.toLowerCase() === 'r') {
+    randomQuiz.runQuiz();
+  } else {
+    readLine("Invalid category. Press 'ok' to restart the quiz.");
+  }
+}
+
+start();
